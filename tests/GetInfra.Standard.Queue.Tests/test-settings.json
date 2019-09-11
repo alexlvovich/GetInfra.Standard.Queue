@@ -1,0 +1,133 @@
+﻿{
+  "rbmqConfigSection": {
+    "Queues": [
+      {
+        "Name": "publisher",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      },
+      {
+        "Name": "subscriber",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      },
+      {
+        "Name": "failureSettings",
+        "Host": "10.0.8.86",
+        "Username": "bridgeusr",
+        "Password": "5dSbUYzVzMvWNdd6RJPL",
+        "Exchange": "test.direct",
+        "Queue": "test.direct.publisher",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      },
+      {
+        "Name": "publisherFanout",
+        "Host": "10.0.8.86",
+        "Username": "bridgeusr",
+        "Password": "5dSbUYzVzMvWNdd6RJPL",
+        "Exchange": "test.fanout",
+        "Queue": "test.fanout.publisher",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "fanout"
+      },
+      {
+        "Name": "subscriberFanout",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      },
+      {
+        "Name": "subscriberDynamicFanout",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      }
+    ]
+  },
+  "MsgQueues": {
+    "Queues": [
+      {
+        "name": "1",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      },
+      {
+        "name": "2",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      },
+      {
+        "name": "3",
+        "Host": "",
+        "Username": "usr",
+        "Password": "pwd",
+        "Exchange": "ex",
+        "Queue": "",
+        "AutoDelete": true,
+        "RoutingKey": "test",
+        "Qos": "1024",
+        "ExchangeType": "direct"
+      }
+    ]
+  },
+  "AzureServiceBus": {
+    "publisher": {
+      "Endpoint": "<your service bus>",
+      "EntityPath": "test",
+      "SasKeyName": "testpublisher",
+      "SasKey": "<your sas key>"
+    },
+    "subscriber": {
+      "Endpoint": "<your service bus>",
+      "EntityPath": "test",
+      "SasKeyName": "testsubscriber",
+      "SasKey": "your sas key",
+      "SubscriptionName": "testSb"
+    }
+  }
+}

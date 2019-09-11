@@ -35,15 +35,17 @@ services.AddSingleton<IJsonSerializer, DefaultJsonSerializer>();
 
 ```
 
-Create following config in appsettings.json
+Create following config in appsettings.json. note "name" to be used for the constuctor
 
 ```
  "AzureServiceBus": {
-    "Endpoint": "amqps://<your url>",
-    "EntityPath": "<Topic>",
-    "SasKeyName": "<Policy name>",
-    "SasKey": "<SAS Key>",
-	"SubscriptionName": ""
+    "name": {
+      "Endpoint": "amqps://<your url>",
+      "EntityPath": "<Topic>",
+      "SasKeyName": "<Policy name>",
+      "SasKey": "<SAS Key>",
+      "SubscriptionName": ""
+    }
   }
 
 ```

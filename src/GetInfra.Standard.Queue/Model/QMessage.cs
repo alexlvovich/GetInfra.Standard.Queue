@@ -6,10 +6,8 @@ namespace GetInfra.Standard.Queue.Model
     {
         public object Body { get; set; }
 
-        [JsonIgnore]
         public QProperties Properties { get; set; }
 
-        [JsonIgnore]
         public ulong DeliveryTag { get; set; }
     }
 }

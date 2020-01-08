@@ -1,6 +1,6 @@
 # Infra.Standard.Queue
 
-[![Build Status](https://dev.azure.com/alexlvovich/GetInfra/_apis/build/status/Build%20GetInfra.Standard.Queue?branchName=master)](https://dev.azure.com/alexlvovich/GetInfra/_build/latest?definitionId=11&branchName=master)
+[![Build Status](https://dev.azure.com/alexlvovich/GetInfra/_apis/build/status/GetInfra.Standard.Queue?branchName=master)](https://dev.azure.com/alexlvovich/GetInfra/_build/latest?definitionId=14&branchName=master)
 ![Nuget](https://img.shields.io/nuget/v/GetInfra.Standard.Queue)
 
 ### General

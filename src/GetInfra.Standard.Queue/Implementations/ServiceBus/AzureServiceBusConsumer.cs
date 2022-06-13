@@ -8,16 +8,16 @@ using Microsoft.Extensions.Logging;
 
 namespace GetInfra.Standard.Queue.Implementations.ServiceBus
 {
-    public class AzureSBTopicConsumer : IQueueConsumer
+    public class AzureServiceBusConsumer : IQueueConsumer
     {
         public ILogger _logger;
-        private readonly SubscriptionClient _client;
+        private readonly IQueueClient _client;
         private readonly IConfiguration _configuration;
         private readonly IJsonSerializer _serializer;
 
-        public AzureSBTopicConsumer(ILoggerFactory loggerFactory, IConfiguration configuration, IJsonSerializer serializer, string consumerName)
+        public AzureServiceBusConsumer(ILoggerFactory loggerFactory, IConfiguration configuration, IJsonSerializer serializer, string consumerName)
         {
-            _logger = loggerFactory.CreateLogger<AzureSBTopicConsumer>();
+            _logger = loggerFactory.CreateLogger<AzureServiceBusConsumer>();
             _serializer = serializer;
             _configuration = configuration;
 
@@ -42,7 +42,7 @@ namespace GetInfra.Standard.Queue.Implementations.ServiceBus
             //    _configuration.GetValue<string>("AzureServiceBus:SasKeyName"),
             //    _configuration.GetValue<string>("AzureServiceBus:SasKey"));
 
-            _client = new SubscriptionClient(conSting, consumer.SubscriptionName);
+            _client = new QueueClient(conSting);
         }
 
         public event Action<object, QMessage> MessageRecieved;
@@ -78,7 +78,7 @@ namespace GetInfra.Standard.Queue.Implementations.ServiceBus
         {
             var ourMsg = _serializer.Deserialize<QMessage>(msg.Body);
             if (MessageRecieved != null)
-                MessageRecieved(_client.SubscriptionName, ourMsg);
+                MessageRecieved(_client.QueueName, ourMsg);
 
             await _client.CompleteAsync(msg.SystemProperties.LockToken);
         }

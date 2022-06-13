@@ -8,16 +8,16 @@ using Microsoft.Extensions.Logging;
 
 namespace GetInfra.Standard.Queue.Implementations.ServiceBus
 {
-    public class AzureSBTopicPublisher : IQueuePublisher
+    public class AzureServiceBusPublisher : IQueuePublisher
     {
         public ILogger _logger;
         private readonly IConfiguration _configuration;
-        private readonly TopicClient _client;
+        private readonly QueueClient _client;
         private readonly IJsonSerializer _serializer;
 
-        public AzureSBTopicPublisher(ILoggerFactory loggerFactory, IConfiguration configuration, IJsonSerializer serializer, string publisherName)
+        public AzureServiceBusPublisher(ILoggerFactory loggerFactory, IConfiguration configuration, IJsonSerializer serializer, string publisherName)
         {
-            _logger = loggerFactory.CreateLogger<AzureSBTopicPublisher>();
+            _logger = loggerFactory.CreateLogger<AzureServiceBusPublisher>();
             _serializer = serializer;
             _configuration = configuration;
 
@@ -36,7 +36,7 @@ namespace GetInfra.Standard.Queue.Implementations.ServiceBus
 
             var conSting = new ServiceBusConnectionStringBuilder(publisher.Endpoint, publisher.EntityPath, publisher.SasKeyName, publisher.SasKey);
 
-            _client = new TopicClient(conSting);
+            _client = new QueueClient(conSting);
         }
 
         public async Task Enqueue(QMessage msg)

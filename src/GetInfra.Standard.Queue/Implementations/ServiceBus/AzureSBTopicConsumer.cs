@@ -27,7 +27,7 @@ namespace GetInfra.Standard.Queue.Implementations.ServiceBus
                 throw new ArgumentNullException("consumer name not specified");
             }
 
-            var consumer = _configuration.GetSection("AzureServiceBus:" + consumerName).Get<ServiceBusConfig>();
+            var consumer = (ServiceBusConfig)_configuration.GetSection("AzureServiceBus:" + consumerName);
             if (consumer == null)
             {
                 _logger.LogError("consumer configuration not found");

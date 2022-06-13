@@ -27,7 +27,7 @@ namespace GetInfra.Standard.Queue.Implementations.ServiceBus
                 throw new ArgumentException("publisher name not specified");
             }
 
-            var publisher = _configuration.GetSection("AzureServiceBus:" + publisherName).Get<ServiceBusConfig>();
+            var publisher = (ServiceBusConfig)_configuration.GetSection("AzureServiceBus:" + publisherName);
             if (publisher == null)
             {
                 _logger.LogError("publisher configuration not found");

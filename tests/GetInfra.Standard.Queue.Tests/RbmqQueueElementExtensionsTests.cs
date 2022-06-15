@@ -1,12 +1,13 @@
-﻿using GetInfra.Standard.Queue.Extensions;
+﻿using FluentAssertions;
+using GetInfra.Standard.Queue.Extensions;
 using GetInfra.Standard.Queue.Implementations.RabbitMq.Config.Json;
-using NUnit.Framework;
+using Xunit;
 
 namespace GetInfra.Standard.Queue.Tests
 {
     public class RbmqQueueElementExtensionsTests
     {
-        [Test]
+        [Fact]
         public void ConvertToRbmqConfigurationElement_Test()
         {
             var re = new RbmqQueueElement() {
@@ -31,22 +32,22 @@ namespace GetInfra.Standard.Queue.Tests
 
             var e = re.ToRbmqConfigurationElement();
 
-            Assert.AreEqual(re.AutoDelete, e.AutoDelete);
-            Assert.AreEqual(re.Exchange, e.Exchange);
-            Assert.AreEqual(re.Bind, e.Bind);
-            Assert.AreEqual(re.DeadLetters, e.DeadLetters);
-            Assert.AreEqual(re.ExchangeType, e.ExchangeType);
-            Assert.AreEqual(re.Host, e.Host);
-            Assert.AreEqual(re.IsDurable, e.IsDurable);
-            Assert.AreEqual(re.MessageLimit, e.MessageLimit);
-            Assert.AreEqual(re.Name, e.Name);
-            Assert.AreEqual(re.Password, e.Password);
-            Assert.AreEqual(re.Port, e.Port);
-            Assert.AreEqual(re.QoS, e.QoS);
-            Assert.AreEqual(re.Queue, e.Queue);
-            Assert.AreEqual(re.RoutingKey, e.RoutingKey);
-            Assert.AreEqual(re.Username, e.Username);
-            Assert.AreEqual(re.Vhost, e.Vhost);
+            re.AutoDelete.Should().Be(e.AutoDelete);
+            re.Exchange.Should().Be(e.Exchange);
+            re.Bind.Should().Be(e.Bind);
+            re.DeadLetters.Should().Be(e.DeadLetters);
+            re.ExchangeType.Should().Be(e.ExchangeType);
+            re.Host.Should().Be(e.Host);
+            re.IsDurable.Should().Be(e.IsDurable);
+            re.MessageLimit.Should().Be(e.MessageLimit);
+            re.Name.Should().Be(e.Name);
+            re.Password.Should().Be(e.Password);
+            re.Port.Should().Be(e.Port);
+            re.QoS.Should().Be(e.QoS);
+            re.Queue.Should().Be(e.Queue);
+            re.RoutingKey.Should().Be(e.RoutingKey);
+            re.Username.Should().Be(e.Username);
+            re.Vhost.Should().Be(e.Vhost);
         }
     }
 }

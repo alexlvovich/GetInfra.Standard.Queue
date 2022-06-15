@@ -1,14 +1,12 @@
-﻿using GetInfra.Standard.Queue.Implementations.ServiceBus;
+﻿using FluentAssertions;
+using GetInfra.Standard.Queue.Implementations.ServiceBus;
 using GetInfra.Standard.Queue.Model;
 using GetInfra.Standard.Queue.Tests.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace GetInfra.Standard.Queue.Tests
 {
@@ -22,20 +20,22 @@ namespace GetInfra.Standard.Queue.Tests
                 .Build();
         }
 
-        [Test]
+        [Fact]
         public async Task SanityTest()
         {
             // define publisher
             IQueuePublisher publisher = new AzureSBTopicPublisher(new LoggerFactory(),_configuration, new DefaultJsonSerializer(), "publisher");
 
             // enqueue
-            Assert.DoesNotThrowAsync(async () => await publisher.Enqueue(new QMessage() { Body = new DummyObject() { Id = 1, Name = "test" } }));
+            var exception = await Record.ExceptionAsync(() => publisher.Enqueue(new QMessage() { Body = new DummyObject() { Id = 1, Name = "test" } }));
+
+            exception.Should().BeNull();
 
            
         }
 
 
-        [Test]
+        [Fact]
         public async Task DequeueTest()
         {
             // define

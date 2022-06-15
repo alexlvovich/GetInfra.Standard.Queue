@@ -1,6 +1,5 @@
 ﻿using GetInfra.Standard.Queue.Model;
 using System;
-using System.Threading.Tasks;
 
 namespace GetInfra.Standard.Queue
 {
@@ -11,5 +10,9 @@ namespace GetInfra.Standard.Queue
         void Subscribe();
 
         void Unsubscribe();
+
+        QMessage Dequeue<T>();
+
+        QMessage Dequeue<T>(bool ack = false);
     }
 }

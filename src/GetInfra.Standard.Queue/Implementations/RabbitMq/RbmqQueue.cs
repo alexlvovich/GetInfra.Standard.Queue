@@ -381,7 +381,6 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                     UserName = config.Username,
                     Password = config.Password,
                     VirtualHost = "/",
-                    Protocol = Protocols.AMQP_0_9_1,
                     HostName = config.Host,
                     Port = config.Port != 0 ? config.Port : AmqpTcpEndpoint.UseDefaultPort
                 };
@@ -439,7 +438,7 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                         IBasicProperties props = result.BasicProperties;
 
                         // get body
-                        byte[] body = result.Body;
+                        byte[] body = result.Body.ToArray();
 
                         var json = Encoding.UTF8.GetString(body);
 
@@ -520,7 +519,7 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                     IBasicProperties props = ea.BasicProperties;
 
                     // get body
-                    byte[] body = ea.Body;
+                    byte[] body = ea.Body.ToArray();
 
                     var json = Encoding.UTF8.GetString(body);
 

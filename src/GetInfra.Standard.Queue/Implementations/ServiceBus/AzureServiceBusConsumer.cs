@@ -82,5 +82,15 @@ namespace GetInfra.Standard.Queue.Implementations.ServiceBus
 
             await _client.CompleteAsync(msg.SystemProperties.LockToken);
         }
+
+        public QMessage Dequeue<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        public QMessage Dequeue<T>(bool ack = false)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

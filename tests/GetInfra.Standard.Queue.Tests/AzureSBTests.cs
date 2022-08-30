@@ -40,6 +40,7 @@ namespace GetInfra.Standard.Queue.Tests
         {
             // define
             IQueueConsumer consumer = new AzureSBTopicConsumer(new LoggerFactory(), _configuration, new DefaultJsonSerializer(), "subscriber");
+            CancellationTokenSource source = new CancellationTokenSource();
 
             // dequeue
             // TODO
@@ -54,7 +55,7 @@ namespace GetInfra.Standard.Queue.Tests
                 _autoResetEvent.Set();
             };
 
-            consumer.Subscribe();
+            consumer.Subscribe(source.Token);
 
 
             Assert.True(_autoResetEvent.WaitOne(3000));

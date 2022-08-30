@@ -4,16 +4,14 @@ using System.Threading;
 
 namespace GetInfra.Standard.Queue
 {
-    public interface IQueueConsumer
+    public interface ITopicConsumer
     {
         event Action<object, QMessage> MessageRecieved;
 
-        void Subscribe();
+        void Subscribe(CancellationToken token);
 
-        void Unsubscribe();
+        QMessage Consume<T>();
 
-        QMessage Dequeue<T>();
-
-        QMessage Dequeue<T>(bool ack = false);
+        QMessage Consume<T>(bool ack = false);
     }
 }

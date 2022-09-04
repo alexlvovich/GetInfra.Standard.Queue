@@ -55,7 +55,7 @@ namespace GetInfra.Standard.Queue.Tests
                 _autoResetEvent.Set();
             };
 
-            consumer.Subscribe(source.Token);
+            consumer.Subscribe();
 
 
             Assert.True(_autoResetEvent.WaitOne(3000));

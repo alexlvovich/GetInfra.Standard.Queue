@@ -23,10 +23,10 @@ namespace GetInfra.Standard.Queue.Tests
         public async Task ProduceTest()
         {
             // define publisher
-            IQueuePublisher publisher = new KafkaTopicPublisher(new DefaultJsonSerializer(), new KafkaPublisherConfig() { BootstrapServers = "localhost:29092,localhost:39092", Topic = "weblog" });
+            ITopicPublisher publisher = new KafkaTopicPublisher(new DefaultJsonSerializer(), new KafkaPublisherConfig() { BootstrapServers = "localhost:29092,localhost:39092", Topic = "weblog" });
 
             // enqueue
-            var exception = await Record.ExceptionAsync(() => publisher.Enqueue(new QMessage() { Body = new DummyObject() { Id = 1, Name = "test" } }));
+            var exception = await Record.ExceptionAsync(() => publisher.Produce(new QMessage() { Body = new DummyObject() { Id = 1, Name = "test" } }));
 
             exception.Should().BeNull();
 
@@ -37,13 +37,13 @@ namespace GetInfra.Standard.Queue.Tests
         [Fact]
         public async Task DequeueTest()
         {
-            IQueuePublisher publisher = new KafkaTopicPublisher(new DefaultJsonSerializer(), new KafkaPublisherConfig() { BootstrapServers = "localhost:29092,localhost:39092", Topic = "weblog" });
-            await publisher.Enqueue(new QMessage() { Body = new DummyObject() { Id = 1, Name = "test" } });
+            ITopicPublisher publisher = new KafkaTopicPublisher(new DefaultJsonSerializer(), new KafkaPublisherConfig() { BootstrapServers = "localhost:29092,localhost:39092", Topic = "weblog" });
+            await publisher.Produce(new QMessage() { Body = new DummyObject() { Id = 1, Name = "test" } });
             // define
-            IQueueConsumer consumer = new KafkaTopicConsumer(new DefaultJsonSerializer(), new KafkaConsumerConfig() { BootstrapServers= "localhost:29092,localhost:39092", GroupId = "consumer_group", Topic = "weblog" });
+            ITopicConsumer consumer = new KafkaTopicConsumer(new DefaultJsonSerializer(), new KafkaConsumerConfig() { BootstrapServers= "localhost:29092,localhost:39092", GroupId = "consumer_group", Topic = "weblog" });
 
             // dequeue
-            var obj = consumer.Dequeue<DummyObject>();
+            var obj = consumer.Consume<DummyObject>();
             // TODO
             obj.Should().NotBeNull();
 

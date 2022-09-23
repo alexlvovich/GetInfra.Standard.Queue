@@ -130,6 +130,7 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
 
         private void ConsumerConnectionShutdown(object sender, ShutdownEventArgs e)
         {
+            CancellationTokenSource source = new CancellationTokenSource();
             if (e.Initiator == ShutdownInitiator.Application) return;
 
             _logger.LogInformation("OnShutDown: Consumer Connection broke!");
@@ -148,7 +149,9 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                     _consumerConn = GetConnection(_consumerSettings);
                     if (_consumerConn == null) throw new Exception("Consumer connection is null");
                     _consumerChannel = Initialize(_consumerConn, _consumerSettings);
+
                     Subscribe();
+
                     _consumerConn.ConnectionShutdown += ConsumerConnectionShutdown;
                     _logger.LogInformation("Consumer Reconnected!");
                     mres.Set(); // state set to true - breaks out of loop

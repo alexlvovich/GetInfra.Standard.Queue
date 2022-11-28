@@ -30,7 +30,7 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
             }
         }
 
-        public RabbitMqPublisher(ILoggerFactory loggerFactory, RbmqConfigurationElement settings): base(loggerFactory, settings)
+        public RabbitMqPublisher(ILoggerFactory loggerFactory, RbmqConfigurationElement settings) : base(loggerFactory, settings)
         {
             // default serialization settings
             this._publisherSerializationSettings = new JsonSerializerSettings()
@@ -38,7 +38,7 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                 Formatting = Formatting.Indented
             };
 
-         
+
             _publisherSettings = new QueueSettings(settings);
             if (string.IsNullOrEmpty(_publisherSettings.Queue))
             {
@@ -46,16 +46,31 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                 _publisherSettings.GeneratedQueueName = true;
                 _publisherSettings.Exclusive = true;
             }
-            _publishConn = GetConnection(_publisherSettings);
-            _publishChannel = Initialize(_publishConn, _publisherSettings);
-
-            _publishConn.ConnectionShutdown += PublisherConnectionShutdown;
             
+
+           
+
+        }
+
+
+        public void EnsureConnection()
+        {
+            if (_publishConn == null || !_publishConn.IsOpen)
+            {
+                _publishConn = GetConnection(_publisherSettings);
+                _publishChannel = Initialize(_publishConn, _publisherSettings);
+
+                _publishConn.ConnectionShutdown += PublisherConnectionShutdown;
+            }
         }
         public async Task Enqueue(QMessage msg)
         {
+            
+            
             try
             {
+                EnsureConnection();
+
                 IBasicProperties basicProperties = _publishChannel.CreateBasicProperties();
 
                 if (msg.Properties != null)

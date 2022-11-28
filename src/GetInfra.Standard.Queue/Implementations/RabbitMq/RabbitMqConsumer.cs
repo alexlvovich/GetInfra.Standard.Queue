@@ -35,9 +35,7 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
                 _consumerSettings.GeneratedQueueName = true;
                 _consumerSettings.Exclusive = true;
             }
-            _consumerConn = GetConnection(_consumerSettings);
-            _consumerChannel = Initialize(_consumerConn, _consumerSettings);
-            _consumerConn.ConnectionShutdown += ConsumerConnectionShutdown;
+      
 
         }
 
@@ -48,12 +46,23 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
             return Dequeue<T>(true);
         }
 
+        public void EnsureConnection()
+        {
+            if (_consumerConn == null || !_consumerConn.IsOpen)
+            {
+                _consumerConn = GetConnection(_consumerSettings);
+                _consumerChannel = Initialize(_consumerConn, _consumerSettings);
+                _consumerConn.ConnectionShutdown += ConsumerConnectionShutdown;
+            }
+        }
+
         public QMessage Dequeue<T>(bool ack = false)
         {
             QMessage msg = null;
             BasicGetResult result;
             try
             {
+                EnsureConnection();
                 //IBasicProperties basicProperties = ConsumerChannel.CreateBasicProperties();
                 //basicProperties.Persistent = true;
                 lock (_lockSubscriber)

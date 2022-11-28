@@ -124,7 +124,9 @@ namespace GetInfra.Standard.Queue.Implementations.RabbitMq
         public void Subscribe()
         {
             _logger.LogInformation("Subscribe: Starting...");
-
+            
+            EnsureConnection();
+            
             Connect();
         }
 
